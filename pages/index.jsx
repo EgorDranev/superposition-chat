@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 // ─── Design tokens — extracted from superposition.pro screenshot ─────────────
 // Light lavender-gray page, white cards, medium purple CTA, dark charcoal text
@@ -162,6 +162,76 @@ function CtaButton() {
   );
 }
 
+
+// ─── FAQ accordion — expands under CtaButton ─────────────────────────────────
+const FAQ_QUESTIONS = [
+  "Подходят ли тренировки для новичков без опыта?",
+  "Как проходит первое занятие и сколько оно стоит?",
+  "Можно ли заниматься при болях в спине или травмах?",
+  "Сколько тренировок в неделю нужно для результата?",
+  "Есть ли онлайн-формат занятий?",
+];
+
+function FaqButton({ onQuestion }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div style={{ marginTop: 6 }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          display: "inline-flex", alignItems: "center", gap: 7,
+          padding: "9px 16px", borderRadius: 20,
+          background: "transparent",
+          border: `1px solid ${T.borderMid}`,
+          color: T.textMuted, fontSize: 12.5, fontWeight: 500,
+          fontFamily: "inherit", cursor: "pointer",
+          letterSpacing: "0.01em",
+          transition: "all 0.15s",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = T.accent; e.currentTarget.style.color = T.accent; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = T.borderMid; e.currentTarget.style.color = T.textMuted; }}
+      >
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.2"/>
+          <path d="M6.5 5.5c0-.8.6-1.5 1.5-1s1 1.5 0 2c-.4.2-.5.5-.5.8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+          <circle cx="6.5" cy="9.5" r="0.6" fill="currentColor"/>
+        </svg>
+        Часто задаваемые вопросы
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
+          <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div style={{
+          marginTop: 8, display: "flex", flexDirection: "column", gap: 4,
+          animation: "fadeUp 0.15s ease",
+        }}>
+          {FAQ_QUESTIONS.map((q, i) => (
+            <button key={i} onClick={() => { setOpen(false); onQuestion(q); }} style={{
+              textAlign: "left", padding: "8px 13px",
+              borderRadius: 10,
+              border: `1px solid ${T.border}`,
+              background: T.bgCard,
+              color: T.textPrimary,
+              fontSize: 12.5, fontFamily: "inherit", cursor: "pointer",
+              lineHeight: 1.45, fontWeight: 400,
+              transition: "all 0.12s",
+              boxShadow: "0 1px 3px rgba(28,20,50,0.06)",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = T.accent; e.currentTarget.style.background = T.accentLight; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.background = T.bgCard; }}
+            >
+              <span style={{ color: T.accent, marginRight: 6, fontSize: 11 }}>→</span>{q}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [messages, setMessages] = useState([
@@ -311,7 +381,7 @@ export default function App() {
                 {renderText(m.text)}
               </div>
 
-              {showCta && <CtaButton />}
+              {showCta && <><CtaButton /><FaqButton onQuestion={send} /></>}
             </div>
           </div>
           );
