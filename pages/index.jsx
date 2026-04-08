@@ -185,17 +185,22 @@ export default function App() {
     setMessages(prev => [...prev, { role: "user", text: msg }]);
     setLoading(true);
     try {
-      const res  = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: SYSTEM, messages: newHistory })
       });
-      const data  = await res.json();
-      const reply = data.content[0].text;
-      setHistory(prev => [...prev, { role: "assistant", content: reply }]);
-      setMessages(prev => [...prev, { role: "assistant", text: reply }]);
-    } catch {
-      setMessages(prev => [...prev, { role: "assistant", text: "Ошибка соединения. Попробуйте ещё раз." }]);
+      const data = await res.json();
+      if (!res.ok || !data.content) {
+        const errMsg = data?.error?.message || data?.error || JSON.stringify(data);
+        setMessages(prev => [...prev, { role: "assistant", text: "Ошибка API: " + errMsg }]);
+      } else {
+        const reply = data.content[0].text;
+        setHistory(prev => [...prev, { role: "assistant", content: reply }]);
+        setMessages(prev => [...prev, { role: "assistant", text: reply }]);
+      }
+    } catch (e) {
+      setMessages(prev => [...prev, { role: "assistant", text: "Ошибка fetch: " + e.message }]);
     }
     setLoading(false);
   }
