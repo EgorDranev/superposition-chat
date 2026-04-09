@@ -548,7 +548,6 @@ export default function Home() {
           }
         </button>
       </>,
-      </>,
       document.body
     )}
   </>);
