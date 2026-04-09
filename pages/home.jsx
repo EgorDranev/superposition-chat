@@ -56,8 +56,7 @@ export default function Home() {
       /* ─── NAV ─── */
       nav{
         position:sticky;top:0;z-index:90;
-        background:rgba(247,245,242,0.88);
-        backdrop-filter:blur(12px);
+        background:rgba(247,245,242,0.97);
         border-bottom:1px solid rgba(0,0,0,0.07);
         padding:0 40px;height:68px;
         display:flex;align-items:center;gap:32px;
@@ -114,9 +113,8 @@ export default function Home() {
         background:var(--dark);
         border-radius:24px;
         height:520px;
-        overflow:hidden;
         display:flex;flex-direction:column;justify-content:flex-end;
-        padding:36px;
+        padding:36px;z-index:1;position:relative;
       }
       .hero-visual::before{
         content:'';position:absolute;inset:0;
@@ -530,12 +528,13 @@ export default function Home() {
     </div>
 
     {mounted && createPortal(
+      <div style={{position:'fixed',top:0,left:0,width:0,height:0,zIndex:2147483647,isolation:'isolate'}}>
       <>
-        <div id="sp-bubble" className={open ? 'open' : ''}>
+        <div id="sp-bubble" className={open ? 'open' : ''} style={{position:'fixed',bottom:'100px',right:'24px',zIndex:2147483647}}>
           <iframe src="/embed" allow="clipboard-write"/>
         </div>
-        {tip && !open && <div id="sp-tip">💬 Спросите тренера</div>}
-        <button id="sp-btn" aria-label="Открыть чат" onClick={() => setOpen(o => !o)}>
+        {tip && !open && <div id="sp-tip" style={{position:'fixed',bottom:'104px',right:'98px',zIndex:2147483646}}>💬 Спросите тренера</div>}
+        <button id="sp-btn" aria-label="Открыть чат" onClick={() => setOpen(o => !o)} style={{position:'fixed',bottom:'24px',right:'24px',zIndex:2147483647}}>
           {open
             ? <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 5l12 12M17 5L5 17" stroke="#fff" strokeWidth="2.2" strokeLinecap="round"/></svg>
             : <>
@@ -550,6 +549,7 @@ export default function Home() {
           }
         </button>
       </>,
+      </div>,
       document.body
     )}
   </>);
