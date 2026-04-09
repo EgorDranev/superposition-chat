@@ -348,6 +348,96 @@ export default function Home() {
       </div>
     </section>
 
+
+    {/* ── ABOUT ── */}
+    <section id="about" style={{background:"var(--card)",padding:"96px 40px"}}>
+      <div style={{maxWidth:1240,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:80,alignItems:"center"}}>
+
+        {/* Left — text */}
+        <div>
+          <div className="sec-label">О студии</div>
+          <h2 className="sec-h" style={{marginBottom:24}}>17 лет.<br/>Один принцип.</h2>
+          <p style={{fontSize:17,lineHeight:1.8,color:"var(--muted)",marginBottom:24,fontFamily:"var(--serif)",fontWeight:400,fontStyle:"italic"}}>
+            «Каждый клиент — это отдельная история. Мы не тренируем всех одинаково.»
+          </p>
+          <p style={{fontSize:14,lineHeight:1.8,color:"var(--muted)",marginBottom:16}}>
+            Superposition.pro — приватная студия персональных тренировок в центре Москвы. Мы открылись в 2007 году с одной идеей: фитнес должен подходить человеку, а не наоборот.
+          </p>
+          <p style={{fontSize:14,lineHeight:1.8,color:"var(--muted)",marginBottom:36}}>
+            Здесь нет потоков и групп. Только вы, тренер и программа, составленная под ваши цели, возможности и образ жизни. Некоторые наши клиенты занимаются с нами больше десяти лет — и приводят детей.
+          </p>
+          <div style={{display:"flex",gap:32}}>
+            {[["10","направлений тренировок"],["4","тренера-специалиста"],["55 мин","каждое занятие"]].map(([n,l]) => (
+              <div key={n}>
+                <div style={{fontFamily:"var(--serif)",fontSize:38,fontWeight:600,color:"var(--ink)",lineHeight:1}}>{n}</div>
+                <div style={{fontSize:11,fontWeight:600,letterSpacing:".07em",textTransform:"uppercase",color:"var(--muted)",marginTop:5}}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right — dark card with quote + details */}
+        <div style={{
+          background:"var(--dark)",borderRadius:20,padding:"44px 40px",
+          position:"relative",overflow:"hidden",
+        }}>
+          {/* subtle grid */}
+          <div style={{
+            position:"absolute",inset:0,
+            backgroundImage:"linear-gradient(rgba(124,90,191,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,90,191,.07) 1px,transparent 1px)",
+            backgroundSize:"32px 32px",
+          }}/>
+          <div style={{position:"relative",zIndex:1}}>
+            <div style={{
+              width:44,height:44,borderRadius:12,
+              background:"rgba(124,90,191,.2)",border:"1px solid rgba(124,90,191,.3)",
+              display:"flex",alignItems:"center",justifyContent:"center",
+              marginBottom:28,
+            }}>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M3 7c0-2.2 1.8-4 4-4h.5v3H7c-.6 0-1 .4-1 1v1h3v6H3V7ZM11 7c0-2.2 1.8-4 4-4h.5v3H15c-.6 0-1 .4-1 1v1h3v6h-6V7Z" fill="rgba(198,183,242,0.7)"/>
+              </svg>
+            </div>
+            <p style={{fontFamily:"var(--serif)",fontSize:22,fontWeight:500,color:"rgba(255,255,255,.9)",lineHeight:1.55,marginBottom:28}}>
+              Я открыла студию, потому что хотела место, где человек не чувствует себя чужим. Где тренировка — это диалог, а не команды.
+            </p>
+            <div style={{display:"flex",alignItems:"center",gap:14,paddingTop:24,borderTop:"1px solid rgba(255,255,255,.08)"}}>
+              <div style={{
+                width:44,height:44,borderRadius:"50%",overflow:"hidden",
+                flexShrink:0,boxShadow:"0 0 0 2px rgba(198,183,242,.4)",
+              }}>
+                <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+                  <rect width="100" height="100" fill="#1e1535"/>
+                  <ellipse cx="50" cy="37" rx="27" ry="24" fill="#110a1a"/>
+                  <ellipse cx="50" cy="56" rx="21" ry="25" fill="#c8936e"/>
+                  <path d="M23 45 Q26 23 50 19 Q74 23 77 45 Q67 37 50 35 Q33 37 23 45Z" fill="#150b22"/>
+                  <ellipse cx="25" cy="51" rx="7" ry="12" fill="#150b22"/>
+                  <ellipse cx="75" cy="51" rx="7" ry="12" fill="#150b22"/>
+                  <path d="M23 45 Q26 23 50 19 Q74 23 77 45" stroke="#c6b7f2" strokeWidth="0.8" opacity="0.5" fill="none"/>
+                  <ellipse cx="50" cy="41" rx="19" ry="9" fill="#c8936e"/>
+                  <ellipse cx="38" cy="54" rx="6.5" ry="4.5" fill="#08051a"/>
+                  <ellipse cx="62" cy="54" rx="6.5" ry="4.5" fill="#08051a"/>
+                  <circle cx="38" cy="54" r="3.8" fill="#9b7ee8"/>
+                  <circle cx="62" cy="54" r="3.8" fill="#9b7ee8"/>
+                  <circle cx="38" cy="54" r="2" fill="#1a0a3a"/>
+                  <circle cx="62" cy="54" r="2" fill="#1a0a3a"/>
+                  <circle cx="39.5" cy="52.2" r="1" fill="white" opacity="0.85"/>
+                  <circle cx="63.5" cy="52.2" r="1" fill="white" opacity="0.85"/>
+                  <path d="M8 100 L22 73 Q50 83 78 73 L92 100Z" fill="#120d1f"/>
+                  <path d="M32 80 L50 76 L68 80" stroke="#c6b7f2" strokeWidth="0.7" opacity="0.4" fill="none"/>
+                </svg>
+              </div>
+              <div>
+                <div style={{fontSize:13,fontWeight:700,color:"rgba(255,255,255,.9)"}}>Наталья Захарова</div>
+                <div style={{fontSize:11,color:"rgba(255,255,255,.35)",marginTop:2,letterSpacing:".04em"}}>Основательница · главный тренер · 17 лет</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     {/* ── DIRECTIONS ── */}
     <section id="directions" className="sec">
       <div className="sec-label">Направления</div>
