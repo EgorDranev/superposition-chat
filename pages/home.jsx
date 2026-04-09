@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { createPortal } from "react-dom";
+import Script from "next/script";
 import { useState, useEffect } from "react";
 
 const DIRECTIONS = [
@@ -16,14 +16,6 @@ const PRICES = [
 
 export default function Home() {
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const [tip, setTip]   = useState(false);
-  useEffect(() => {
-    const a = setTimeout(() => setTip(true),  1800);
-    const b = setTimeout(() => setTip(false), 5000);
-    return () => { clearTimeout(a); clearTimeout(b); };
-  }, []);
 
   return (<>
     <Head>
@@ -314,7 +306,7 @@ export default function Home() {
       </ul>
       <div className="nav-r">
         <a className="nav-phone" href="tel:+74999927677">+7 (499) 992-76-77</a>
-        <button className="nav-btn" onClick={() => setOpen(true)}>Записаться</button>
+        <button className="nav-btn" onClick={() => window.spOpenWidget && window.spOpenWidget()}>Записаться</button>
       </div>
     </nav>
 
@@ -327,8 +319,8 @@ export default function Home() {
           Приватный зал. Опытный тренер. Программа, составленная лично под вас — без шаблонов и без спешки.
         </p>
         <div className="hero-actions">
-          <button className="btn-solid" onClick={() => setOpen(true)}>Записаться на тренировку</button>
-          <button className="btn-outline" onClick={() => setOpen(true)}>Спросить тренера</button>
+          <button className="btn-solid" onClick={() => window.spOpenWidget && window.spOpenWidget()}>Записаться на тренировку</button>
+          <button className="btn-outline" onClick={() => window.spOpenWidget && window.spOpenWidget()}>Спросить тренера</button>
         </div>
         <div className="hero-stats">
           <div><div className="stat-n">17</div><div className="stat-l">лет работы</div></div>
@@ -483,7 +475,7 @@ export default function Home() {
             <div className="p-card-label">{p.label}</div>
             <div className="p-card-amt">{p.amount}</div>
             <div className="p-card-note">{p.note}</div>
-            <button className="p-card-btn" onClick={() => setOpen(true)}>Записаться</button>
+            <button className="p-card-btn" onClick={() => window.spOpenWidget && window.spOpenWidget()}>Записаться</button>
           </div>
         ))}
       </div>
@@ -494,7 +486,7 @@ export default function Home() {
       <h2>Первая тренировка —<br/>уже на этой неделе</h2>
       <div className="cta-strip-r">
         <div className="cta-ph">+7 (499) 992-76-77</div>
-        <button className="btn-inv" onClick={() => setOpen(true)}>Записаться</button>
+        <button className="btn-inv" onClick={() => window.spOpenWidget && window.spOpenWidget()}>Записаться</button>
       </div>
     </div>
 
@@ -527,28 +519,5 @@ export default function Home() {
       <span className="ft-copy">superposition.pro@gmail.com</span>
     </div>
 
-    {mounted && createPortal(
-      <>
-        <div id="sp-bubble" className={open ? 'open' : ''} style={{position:'fixed',bottom:'100px',right:'24px',zIndex:2147483647}}>
-          <iframe src="/embed" allow="clipboard-write"/>
-        </div>
-        {tip && !open && <div id="sp-tip" style={{position:'fixed',bottom:'104px',right:'98px',zIndex:2147483646}}>💬 Спросите тренера</div>}
-        <button id="sp-btn" aria-label="Открыть чат" onClick={() => setOpen(o => !o)} style={{position:'fixed',bottom:'24px',right:'24px',zIndex:2147483647}}>
-          {open
-            ? <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 5l12 12M17 5L5 17" stroke="#fff" strokeWidth="2.2" strokeLinecap="round"/></svg>
-            : <>
-                <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
-                  <path d="M4 5a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9.5L4 23V5Z" fill="white"/>
-                  <circle cx="9.5" cy="11.5" r="1.3" fill="#7c5abf"/>
-                  <circle cx="13.5" cy="11.5" r="1.3" fill="#7c5abf"/>
-                  <circle cx="17.5" cy="11.5" r="1.3" fill="#7c5abf"/>
-                </svg>
-                <div id="sp-dot"/>
-              </>
-          }
-        </button>
-      </>,
-      document.body
-    )}
-  </>);
+    </>);
 }
