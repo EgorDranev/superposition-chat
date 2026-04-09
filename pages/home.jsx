@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Script from "next/script";
 import { useState, useEffect } from "react";
 
 const DIRECTIONS = [
@@ -16,6 +15,14 @@ const PRICES = [
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (document.getElementById('sp-widget-script')) return;
+    const s = document.createElement('script');
+    s.id = 'sp-widget-script';
+    s.src = '/widget.js';
+    s.async = true;
+    document.body.appendChild(s);
+  }, []);
 
   return (<>
     <Head>
