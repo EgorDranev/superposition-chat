@@ -251,7 +251,7 @@ export default function Home() {
 
       /* ─── WIDGET ─── */
       #sp-bubble{
-        position:fixed;bottom:100px;right:24px;z-index:9998;
+        position:fixed;bottom:100px;right:24px;z-index:999999;
         width:400px;height:640px;max-height:calc(100vh - 120px);
         border-radius:20px;overflow:hidden;
         box-shadow:0 12px 56px rgba(22,19,31,.28);
@@ -263,7 +263,7 @@ export default function Home() {
       #sp-bubble.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1)}
       #sp-bubble iframe{width:100%;height:100%;border:none;display:block}
       #sp-btn{
-        position:fixed;bottom:24px;right:24px;z-index:9999;
+        position:fixed;bottom:24px;right:24px;z-index:999999;
         width:64px;height:64px;border-radius:50%;
         background:var(--pur);border:none;cursor:pointer;
         box-shadow:0 4px 24px rgba(124,90,191,.5);
@@ -273,7 +273,7 @@ export default function Home() {
       #sp-btn:hover{transform:scale(1.06);box-shadow:0 6px 32px rgba(124,90,191,.6)}
       #sp-dot{position:absolute;top:1px;right:1px;width:14px;height:14px;border-radius:50%;background:#2ea86b;border:2.5px solid #fff}
       #sp-tip{
-        position:fixed;bottom:104px;right:98px;z-index:9997;
+        position:fixed;bottom:104px;right:98px;z-index:999998;
         background:var(--dark);color:#fff;font-family:var(--sans);
         font-size:13px;font-weight:500;padding:10px 16px;border-radius:10px;
         white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.2);
