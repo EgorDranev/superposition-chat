@@ -241,6 +241,7 @@ export default function App() {
   const [loading, setLoading]    = useState(false);
   const [chipsVisible, setChips] = useState(true);
   const [history, setHistory]    = useState([]);
+  const [convId,  setConvId]     = useState(null);
   const bottomRef                = useRef(null);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, loading]);
@@ -255,12 +256,16 @@ export default function App() {
     setMessages(prev => [...prev, { role: "user", text: msg }]);
     setLoading(true);
     try {
+      const headers = { "Content-Type": "application/json" };
+      if (convId) headers["x-conv-id"] = convId;
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: SYSTEM, messages: newHistory })
       });
       const data = await res.json();
+      const returnedId = res.headers.get("x-conv-id");
+      if (returnedId) setConvId(returnedId);
       if (!res.ok || !data.content) {
         const errMsg = data?.error?.message || data?.error || JSON.stringify(data);
         setMessages(prev => [...prev, { role: "assistant", text: "Ошибка API: " + errMsg }]);
