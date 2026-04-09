@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/router";
 
 function ChatWidget() {
   const [open, setOpen]     = useState(false);
@@ -10,7 +11,6 @@ function ChatWidget() {
     setMounted(true);
     const a = setTimeout(() => setTip(true),  1800);
     const b = setTimeout(() => setTip(false), 5000);
-    // expose globally so page buttons can trigger it
     window.__spOpen = () => setOpen(true);
     return () => { clearTimeout(a); clearTimeout(b); delete window.__spOpen; };
   }, []);
@@ -20,7 +20,6 @@ function ChatWidget() {
   const F = { position:"fixed", zIndex:2147483647 };
 
   const widget = <>
-    {/* Popup */}
     <div style={{
       ...F, bottom:100, right:24,
       width:400, height:640,
@@ -38,7 +37,6 @@ function ChatWidget() {
         style={{width:"100%",height:"100%",border:"none",display:"block"}}/>}
     </div>
 
-    {/* Tooltip */}
     {tip && !open && (
       <div style={{
         ...F, bottom:104, right:98,
@@ -54,7 +52,6 @@ function ChatWidget() {
       </div>
     )}
 
-    {/* Button */}
     <button
       onClick={() => setOpen(o => !o)}
       aria-label="Открыть чат"
@@ -84,9 +81,15 @@ function ChatWidget() {
   return createPortal(widget, document.body);
 }
 
+// Pages where the widget should appear
+const WIDGET_PAGES = ["/home", "/"];
+
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+  const showWidget = WIDGET_PAGES.includes(router.pathname);
+
   return <>
     <Component {...pageProps} />
-    <ChatWidget />
+    {showWidget && <ChatWidget />}
   </>;
 }
