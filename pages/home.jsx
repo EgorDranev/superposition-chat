@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 
 const DIRECTIONS = [
@@ -15,6 +16,8 @@ const PRICES = [
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [tip, setTip]   = useState(false);
   useEffect(() => {
     const a = setTimeout(() => setTip(true),  1800);
@@ -526,26 +529,28 @@ export default function Home() {
       <span className="ft-copy">superposition.pro@gmail.com</span>
     </div>
 
-    {/* ── CHAT WIDGET ── */}
-    <div id="sp-bubble" className={open ? 'open' : ''}>
-      <iframe src="/embed" allow="clipboard-write"/>
-    </div>
-
-    {tip && !open && <div id="sp-tip">💬 Спросите тренера</div>}
-
-    <button id="sp-btn" aria-label="Открыть чат" onClick={() => setOpen(o => !o)}>
-      {open
-        ? <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 5l12 12M17 5L5 17" stroke="#fff" strokeWidth="2.2" strokeLinecap="round"/></svg>
-        : <>
-            <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
-              <path d="M4 5a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9.5L4 23V5Z" fill="white"/>
-              <circle cx="9.5" cy="11.5" r="1.3" fill="#7c5abf"/>
-              <circle cx="13.5" cy="11.5" r="1.3" fill="#7c5abf"/>
-              <circle cx="17.5" cy="11.5" r="1.3" fill="#7c5abf"/>
-            </svg>
-            <div id="sp-dot"/>
-          </>
-      }
-    </button>
+    {mounted && createPortal(
+      <>
+        <div id="sp-bubble" className={open ? 'open' : ''}>
+          <iframe src="/embed" allow="clipboard-write"/>
+        </div>
+        {tip && !open && <div id="sp-tip">💬 Спросите тренера</div>}
+        <button id="sp-btn" aria-label="Открыть чат" onClick={() => setOpen(o => !o)}>
+          {open
+            ? <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 5l12 12M17 5L5 17" stroke="#fff" strokeWidth="2.2" strokeLinecap="round"/></svg>
+            : <>
+                <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
+                  <path d="M4 5a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9.5L4 23V5Z" fill="white"/>
+                  <circle cx="9.5" cy="11.5" r="1.3" fill="#7c5abf"/>
+                  <circle cx="13.5" cy="11.5" r="1.3" fill="#7c5abf"/>
+                  <circle cx="17.5" cy="11.5" r="1.3" fill="#7c5abf"/>
+                </svg>
+                <div id="sp-dot"/>
+              </>
+          }
+        </button>
+      </>,
+      document.body
+    )}
   </>);
 }
